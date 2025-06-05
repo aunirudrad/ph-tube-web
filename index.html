@@ -23,6 +23,16 @@
     </script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://kit.fontawesome.com/4b6fa1040a.js" crossorigin="anonymous"></script>
+
+    <style>
+        .active{
+            
+            background: #FF1F3D;
+            color: white;
+            font-size: 1.125rem;
+            font-weight:600;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,12 +52,17 @@
     </header>
     <nav id="categories" class="pt-8 mx-auto flex justify-center items-center gap-5">
         <div>
-            <button class="rounded-lg py-2 px-5 text-[1.125rem] font-semibold text-white bg-btn-secondary">All</button>
+            <button id="btn-all" onclick="loadVideos()"
+                class=" btn rounded-lg py-2 px-5 font-medium hover:text-[1.125rem] hover:font-semibold hover:text-white hover:bg-btn-secondary">All</button>
         </div>
     </nav>
 
 
     <section id="videos" class="w-11/12 mx-auto pt-10 grid grid-cols-4 gap-6 justify-between ">
+        <div class="col-span-full flex flex-col justify-center items-center py-40">
+            <img class="w-[150px] pb-10" src="assets/Icon.png" alt="">
+            <h2 class="text-4xl font-bold text-text-secondary">Oops!! Sorry, There is no content here</h2>
+        </div>
 
     </section>
 
@@ -55,6 +70,7 @@
 
 
     <script src="js/api.js"></script>
+    <script src="js/btn-handler.js"></script>
 </body>
 
 </html>
