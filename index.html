@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PH-TUBE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'text-primary': '#252525',
+                        'btn-primary': '#25252520',
+                        'btn-secondary': '#FF1F3D'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+</head>
+
+<body>
+    <header>
+        <nav class="w-11/12 mx-auto flex justify-between items-center pt-12 pb-8 border-b">
+            <div class="">
+                <img src="assets/Logo.png" alt="">
+            </div>
+            <div class="rounded-lg bg-btn-primary py-3 px-5 font-medium text-xl text-primary">
+                <button class="btn-sort">Sort of View</button>
+            </div>
+            <div class="rounded-lg bg-btn-secondary py-3 px-5 font-medium text-xl text-white">
+                <button class="btn-blogs">Blogs</button>
+            </div>
+        </nav>
+
+    </header>
+    <nav id="categories" class="pt-8 mx-auto flex justify-center items-center gap-5">
+        <div>
+            <button class="rounded-lg py-2 px-5 text-[1.125rem] font-semibold text-white bg-btn-secondary">All</button>
+
+        </div>
+    </nav>
+
+
+    <script src="js/api.js"></script>
+</body>
+
+</html>
