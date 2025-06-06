@@ -60,8 +60,45 @@ const loadVideos = () => {
             removeClassButton();
 
             document.getElementById("btn-all").classList.add("active");
-            displayVideos(data.videos)});
+            displayVideos(data.videos)
+        });
 }
+
+
+function loadVideoDetails(videoId) {
+    // console.log(videoId);
+    const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+
+    fetch(url).then(res => res.json()).then(data => {
+
+        displayVideoDetails(data.video)
+    })
+}
+
+function displayVideoDetails(videoDetails) {
+
+    document.getElementById("video_details").showModal();
+    const detailsContainer = document.getElementById("details_container");
+
+    detailsContainer.innerHTML = `
+    <div class="card rounded-lg bg-base-100 image-full shadow-sm">
+  <figure>
+    <img
+      src="${videoDetails.thumbnail}"
+      alt="Shoes" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title text-xl">${videoDetails.title}</h2>
+    <hr>
+    <p>${videoDetails.description}</p>
+    <div class="card-actions justify-end">
+      <span>${videoDetails.others.views} Views</span>
+    </div>
+  </div>
+</div>
+    `;
+}
+
 
 const displayVideos = (videos) => {
     // console.log(videos);
@@ -99,6 +136,7 @@ const displayVideos = (videos) => {
                 </div>
 
             </div>
+            <button onclick="loadVideoDetails('${video.video_id}')" class="btn btn-block bg-slate-200">Show Details</button>
         </div>
         `;
 
