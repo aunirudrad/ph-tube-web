@@ -1,3 +1,12 @@
+function showLoader(){
+    document.getElementById("loader").classList.remove("hidden");
+    document.getElementById("videos").classList.add("hidden");
+}
+function hideLoader(){
+    document.getElementById("loader").classList.add("hidden");
+    document.getElementById("videos").classList.remove("hidden");
+}
+
 function removeClassButton() {
     const activeClassButton = document.getElementsByClassName("active");
     for (const btn of activeClassButton) {
@@ -6,6 +15,7 @@ function removeClassButton() {
 }
 
 function loadCategories() {
+    
     fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
         .then((res) => res.json())
         .then((data) => {
@@ -34,6 +44,7 @@ function displayCategories(categories) {
 }
 
 const loadCategoryVideos = (id) => {
+    showLoader();
 
     const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
 
@@ -47,20 +58,21 @@ const loadCategoryVideos = (id) => {
             const clickedButton = document.getElementById(`btn-${id}`);
 
             clickedButton.classList.add("active");
-            console.log(clickedButton);
+            // console.log(clickedButton);
             displayVideos(data.category);
         });
 
 }
 
-const loadVideos = () => {
-    fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+const loadVideos = (searchText = "") => {
+    showLoader();
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
         .then(res => res.json())
         .then(data => {
             removeClassButton();
 
             document.getElementById("btn-all").classList.add("active");
-            displayVideos(data.videos)
+            displayVideos(data.videos);
         });
 }
 
@@ -83,7 +95,7 @@ function displayVideoDetails(videoDetails) {
     detailsContainer.innerHTML = `
     <div class="card rounded-lg bg-base-100 image-full shadow-sm">
   <figure>
-    <img
+    <img class="w-full h-full object-cover"
       src="${videoDetails.thumbnail}"
       alt="Shoes" />
   </figure>
@@ -91,8 +103,9 @@ function displayVideoDetails(videoDetails) {
     <h2 class="card-title text-xl">${videoDetails.title}</h2>
     <hr>
     <p>${videoDetails.description}</p>
-    <div class="card-actions justify-end">
-      <span>${videoDetails.others.views} Views</span>
+    <div class="flex justify-between items-center">
+    <p class=" py-2 text-white flex gap-3 items-center">${videoDetails.authors[0].profile_name} ${videoDetails.authors[0].verified == true ? `<img class="w-5" src="https://img.icons8.com/?size=64&id=eZo3c88c63il&format=png">` : ``}</p>
+      <p class="text-right">${videoDetails.others.views} Views</p>
     </div>
   </div>
 </div>
@@ -131,10 +144,9 @@ const displayVideos = (videos) => {
                 </div>
                 <div>
                     <h2 class="font-bold text-text-secondary">${video.title}</h2>
-                    <p class="text-sm py-2 text-text-ternary flex gap-3 items-center">${video.authors[0].profile_name} <img class="w-5" src="https://img.icons8.com/?size=64&id=eZo3c88c63il&format=png"></p>
-                    <p class="text-sm text-text-ternary">${video.others.views} Views</p>
+                    <p class="text-sm py-2 text-text-ternary flex gap-3 items-center">${video.authors[0].profile_name} ${video.authors[0].verified == true ? `<img class="w-5" src="https://img.icons8.com/?size=64&id=eZo3c88c63il&format=png">` : ``}</p>
+                    <p class="text-sm text-text-ternary pb-4">${video.others.views} Views</p>
                 </div>
-
             </div>
             <button onclick="loadVideoDetails('${video.video_id}')" class="btn btn-block bg-slate-200">Show Details</button>
         </div>
@@ -143,8 +155,16 @@ const displayVideos = (videos) => {
         videoContainer.appendChild(singleVideo);
 
     });
+    hideLoader();
 
 };
+
+document.getElementById("search-video").addEventListener("keyup", function(event){
+
+    const input = event.target.value;
+
+    loadVideos(input);
+})
 
 
 loadCategories();
